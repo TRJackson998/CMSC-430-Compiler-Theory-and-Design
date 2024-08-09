@@ -1,6 +1,0 @@
-// Undeclared List Variable
-
-function main returns integer;
-begin
-    primes(1) + 1;
-end;
