@@ -1,0 +1,4 @@
+*.o
+scanner.c
+lexemes.txt
+compile
