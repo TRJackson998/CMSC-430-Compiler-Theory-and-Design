@@ -25,14 +25,14 @@ static void displayErrors();
 void firstLine()
 {
 	lineNumber = 1;
-	printf("\n%4d  ",lineNumber);
+	printf("\n%4d  ", lineNumber);
 }
 
 void nextLine()
 {
 	displayErrors();
 	lineNumber++;
-	printf("%4d  ",lineNumber);
+	printf("%4d  ", lineNumber);
 }
 
 int lastLine()
@@ -62,9 +62,9 @@ int lastLine()
 
 void appendError(ErrorCategories errorCategory, string message)
 {
-	string messages[] = { "Lexical Error, Invalid Character ", "",
+	string messages[] = {"Lexical Error, Invalid Character ", "",
 						 "Semantic Error, ", "Semantic Error, Duplicate ",
-		"Semantic Error, Undeclared " };
+						 "Semantic Error, Undeclared "};
 
 	errors.push_back(messages[errorCategory] + message);
 

@@ -5,7 +5,43 @@
 
 // This file contains the enumerated type definition for tokens
 
-enum Tokens {ADDOP = 256, MULOP, ANDOP, RELOP, ARROW, BEGIN_, CASE, CHARACTER, END,
-     ENDSWITCH, FUNCTION, INTEGER, IS, LIST, OF, OTHERS, RETURNS, SWITCH, WHEN,
-     IDENTIFIER, INT_LITERAL, CHAR_LITERAL, ELSE, ELSEIF, ENDFOLD, ENDIF, FOLD,
-     IF, LEFT, RIGHT, THEN, OROP, NOTOP, REMOP, EXPOP, NEGOP, REAL_LITERAL};
+enum Tokens
+{
+    ADDOP = 256,
+    MULOP,
+    ANDOP,
+    RELOP,
+    ARROW,
+    BEGIN_,
+    CASE,
+    CHARACTER,
+    END,
+    ENDSWITCH,
+    FUNCTION,
+    INTEGER,
+    IS,
+    LIST,
+    OF,
+    OTHERS,
+    RETURNS,
+    SWITCH,
+    WHEN,
+    IDENTIFIER,
+    INT_LITERAL,
+    CHAR_LITERAL,
+    ELSE,
+    ELSEIF,
+    ENDFOLD,
+    ENDIF,
+    FOLD,
+    IF,
+    LEFT,
+    RIGHT,
+    THEN,
+    OROP,
+    NOTOP,
+    REMOP,
+    EXPOP,
+    NEGOP,
+    REAL_LITERAL
+};
