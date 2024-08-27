@@ -5,6 +5,15 @@
 
 // This file contains the enumerated type definition for tokens
 
+/*
+Terrence Jackson
+UMGC CMSC 430
+8.27.24
+Project 1
+
+Added more tokens for keywords, operators, and literals
+*/
+
 enum Tokens
 {
     ADDOP = 256,

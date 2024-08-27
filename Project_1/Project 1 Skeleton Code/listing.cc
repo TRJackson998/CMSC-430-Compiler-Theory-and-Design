@@ -6,6 +6,15 @@
 // This file contains the bodies of the functions that produces the
 // compilation listing
 
+/*
+Terrence Jackson
+UMGC CMSC 430
+8.27.24
+Project 1
+
+Updates to lastLine(), appendError(), displayErrors()
+*/
+
 #include <cstdio>
 #include <string>
 #include <vector>

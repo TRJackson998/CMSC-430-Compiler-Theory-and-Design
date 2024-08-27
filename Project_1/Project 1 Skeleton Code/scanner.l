@@ -5,6 +5,16 @@
 
 /* This file contains flex input file */
 
+/*
+Terrence Jackson
+UMGC CMSC 430
+8.27.24
+Project 1
+
+Additional regexes and lexemes 
+to implement further keywords, operators, and literals
+*/
+
 %{
 #include <cstdio>
 #include <string>
