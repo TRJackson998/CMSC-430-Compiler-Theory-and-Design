@@ -1,0 +1,9 @@
+// Req 2 - logical operators ! and |
+
+function main var_1: integer returns integer;
+    v2: integer is 0;
+begin
+    if !(var_1 > 5) | !(var_1 > 0)  then
+        v2
+    endif;
+end;

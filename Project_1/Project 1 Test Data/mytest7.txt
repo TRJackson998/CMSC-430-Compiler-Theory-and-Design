@@ -1,0 +1,11 @@
+// Req 13 - escape character literals
+
+function main x: character returns character;
+    char_1: character is '\b';
+    char_2: character is '\t';
+    char_3: character is '\n';
+    char_4: character is '\r';
+    char_5: character is '\f';
+begin
+    char_1 < char2;
+end;

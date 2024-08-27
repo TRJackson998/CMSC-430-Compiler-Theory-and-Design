@@ -1,0 +1,12 @@
+// Req 9+10 - a new kind of comment, identifiers with underscores
+
+function main x: integer returns integer;
+    -- a function with lots of variables
+    a: integer is 0;
+    _b_variable: integer is 0; --leading underscore
+    c_: integer is 0; -- trailing underscore
+    d___e: integer is 0; -- too many underscores in a row
+    f_g_1_h_2: integer is 0;
+begin
+    a + b;
+end;

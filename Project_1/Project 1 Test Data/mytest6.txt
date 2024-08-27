@@ -1,0 +1,13 @@
+// Req 11+12 - hexadecimal and float
+
+function main x: integer returns integer;
+    a: real is .001;
+    b: real is 0.98;
+    c: real is 1.54892e+2;
+    d: real is 6.925E-2;
+    e: integer is #A9b;
+    f: integer is #15g;
+    g: real is $6.52;
+begin
+    a + b;
+end;

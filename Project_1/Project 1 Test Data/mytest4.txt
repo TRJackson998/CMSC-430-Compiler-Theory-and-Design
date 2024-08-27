@@ -1,0 +1,11 @@
+// Req 4-8 - binary subtraction operator, division operator,
+//           remainder operator, exponent operator, unary minus operator
+
+function main variable_one: integer returns integer;
+begin
+    variable_one - 1;
+    variable_one / 1;
+    variable_one % 1;
+    variable_one ^ 1;
+    ~variable_one;
+end;
