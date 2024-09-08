@@ -104,7 +104,15 @@ list_choice:
 	list | IDENTIFIER ;
 
 condition:
-	condition ANDOP relation |
+	condition OROP conjunction |
+	conjunction ;
+
+conjunction:
+	conjunction ANDOP negation |
+	negation ;
+
+negation:
+	NOTOP relation |
 	relation ;
 
 relation:
