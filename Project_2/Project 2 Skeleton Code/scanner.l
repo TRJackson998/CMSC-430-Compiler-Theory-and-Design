@@ -76,6 +76,7 @@ if { ECHO; return(IF); }
 left { ECHO; return(LEFT); }
 right { ECHO; return(RIGHT); }
 then { ECHO; return(THEN); }
+real { ECHO; return(REAL); }
 
 {id}		{ ECHO; return(IDENTIFIER);}
 {dec}		{ ECHO; return(INT_LITERAL); }
