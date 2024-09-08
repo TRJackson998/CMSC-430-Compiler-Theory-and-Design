@@ -41,7 +41,7 @@ punc		[\(\),:;]
 "~"		{ ECHO; return(NEGOP); }
 "*"		{ ECHO; return(MULOP); }
 "/"		{ ECHO; return(MULOP); }
-"%"		{ ECHO; return(REMOP); }
+"%"		{ ECHO; return(MODOP); }
 "^"		{ ECHO; return(EXPOP); }
 "&"		{ ECHO; return(ANDOP); }
 "<"		{ ECHO; return(RELOP); }
@@ -68,7 +68,7 @@ returns		{ ECHO; return(RETURNS); }
 switch		{ ECHO; return(SWITCH); }
 when		{ ECHO; return(WHEN); }
 else { ECHO; return(ELSE); }
-elseif { ECHO; return(ELSEIF); }
+elsif { ECHO; return(ELSIF); }
 endfold { ECHO; return(ENDFOLD); }
 endif { ECHO; return(ENDIF); }
 fold { ECHO; return(FOLD); }

@@ -22,30 +22,42 @@ void yyerror(const char* message);
 
 %token IDENTIFIER INT_LITERAL CHAR_LITERAL REAL_LITERAL
 
-%token ADDOP MULOP ANDOP RELOP ARROW OROP NOTOP REMOP EXPOP NEGOP
+%token ADDOP MULOP ANDOP RELOP ARROW OROP NOTOP MODOP EXPOP NEGOP
 
-%token BEGIN_ CASE CHARACTER ELSE ELSEIF END ENDIF ENDFOLD ENDSWITCH FOLD FUNCTION IF INTEGER IS LIST OF OTHERS
+%token BEGIN_ CASE CHARACTER ELSE ELSIF END ENDIF ENDFOLD ENDSWITCH FOLD FUNCTION IF INTEGER IS LIST OF OTHERS
 	RETURNS SWITCH WHEN LEFT RIGHT THEN REAL
 
 %%
 
 function:	
-	function_header optional_variable body ;
+	function_header optional_variables body ;
 
 function_header:	
-	FUNCTION IDENTIFIER RETURNS type ';'  ;
+	FUNCTION IDENTIFIER parameters RETURNS type ';'  ;
 
 type:
 	INTEGER |
+	REAL |	
 	CHARACTER ;
 	
-optional_variable:
-	variable |
+optional_variables:
+	optional_variables variable |
 	%empty ;
-    
+
 variable:	
 	IDENTIFIER ':' type IS statement ';' |
 	IDENTIFIER ':' LIST OF type IS list ';' ;
+
+parameters:
+	parameter optional_parameters |
+	%empty ;
+
+optional_parameters:
+	optional_parameters ',' parameter |
+	%empty ;
+
+parameter:	
+	IDENTIFIER ':' type ;
 
 list:
 	'(' expressions ')' ;
@@ -64,7 +76,9 @@ statement_:
 statement:
 	expression |
 	WHEN condition ',' expression ':' expression |
-	SWITCH expression IS cases OTHERS ARROW statement ';' ENDSWITCH ;
+	SWITCH expression IS cases OTHERS ARROW statement ';' ENDSWITCH |
+	IF condition THEN statement ';' elsifs ELSE statement ';' ENDIF |
+	FOLD direction operator list_choice ENDFOLD ;
 
 cases:
 	cases case |
@@ -72,6 +86,22 @@ cases:
 	
 case:
 	CASE INT_LITERAL ARROW statement ';' ; 
+
+elsifs:
+	elsifs elsif |
+	%empty ;
+
+elsif:
+	ELSIF condition THEN statement ';' ;
+
+direction:
+	LEFT | RIGHT ;
+
+operator:
+	ADDOP | MULOP ;
+
+list_choice:
+	list | IDENTIFIER ;
 
 condition:
 	condition ANDOP relation |
@@ -86,13 +116,23 @@ expression:
 	term ;
       
 term:
-	term MULOP primary |
+	term MULOP factor |
+	term MODOP factor |
+	factor ;
+
+factor:
+	negate EXPOP factor |
+	negate ;
+
+negate:
+	NEGOP primary |
 	primary ;
 
 primary:
 	'(' expression ')' |
 	INT_LITERAL |
 	CHAR_LITERAL |
+	REAL_LITERAL |
 	IDENTIFIER '(' expression ')' |
 	IDENTIFIER ;
 
