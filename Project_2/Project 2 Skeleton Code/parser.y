@@ -33,7 +33,8 @@ function:
 	function_header optional_variables body ;
 
 function_header:	
-	FUNCTION IDENTIFIER parameters RETURNS type ';'  ;
+	FUNCTION IDENTIFIER parameters RETURNS type ';' |
+	error ';' ;
 
 type:
 	INTEGER |
@@ -46,7 +47,8 @@ optional_variables:
 
 variable:	
 	IDENTIFIER ':' type IS statement ';' |
-	IDENTIFIER ':' LIST OF type IS list ';' ;
+	IDENTIFIER ':' LIST OF type IS list ';' |
+	error ';' ;
 
 parameters:
 	parameter optional_parameters |
@@ -82,6 +84,7 @@ statement:
 
 cases:
 	cases case |
+	error ';' |
 	%empty ;
 	
 case:
