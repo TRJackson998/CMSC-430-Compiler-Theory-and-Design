@@ -4,6 +4,15 @@
    Summer 2023 
 
    Project 2 Parser */
+/*
+Terrence Jackson
+UMGC CMSC 430
+9.8.24
+Project 2
+
+Additional tokens and productions to implement parsing
+for more operators, statements, expressions, and variables
+*/   
 
 %{
 
