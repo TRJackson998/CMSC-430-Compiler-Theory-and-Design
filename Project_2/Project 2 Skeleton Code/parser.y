@@ -88,7 +88,7 @@ statement:
 	expression |
 	WHEN condition ',' expression ':' expression |
 	SWITCH expression IS cases OTHERS ARROW statement ';' ENDSWITCH |
-	IF condition THEN statement ';' elsifs ELSE statement ';' ENDIF |
+	IF condition THEN statement_ elsifs ELSE statement_ ENDIF |
 	FOLD direction operator list_choice ENDFOLD ;
 
 cases:
@@ -104,7 +104,7 @@ elsifs:
 	%empty ;
 
 elsif:
-	ELSIF condition THEN statement ';' ;
+	ELSIF condition THEN statement_ ;
 
 direction:
 	LEFT | RIGHT ;
