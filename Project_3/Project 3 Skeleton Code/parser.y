@@ -40,39 +40,52 @@ double result;
 
 %token <iden> IDENTIFIER
 
-%token <value> INT_LITERAL CHAR_LITERAL
+%token <value> INT_LITERAL CHAR_LITERAL REAL_LITERAL
 
-%token <oper> ADDOP MULOP ANDOP RELOP
+%token <oper> ADDOP MULOP ANDOP RELOP OROP NOTOP MODOP EXPOP NEGOP
 
 %token ARROW
 
-%token BEGIN_ CASE CHARACTER ELSE END ENDSWITCH FUNCTION INTEGER IS LIST OF OTHERS
-	RETURNS SWITCH WHEN
+%token BEGIN_ CASE CHARACTER ELSE ELSIF END ENDIF ENDFOLD ENDSWITCH FOLD FUNCTION IF INTEGER IS LIST OF OTHERS
+	RETURNS SWITCH WHEN LEFT RIGHT THEN REAL
 
 %type <value> body statement_ statement cases case expression term primary
-	 condition relation
+	 condition relation conjunction variable factor
 
 %type <list> list expressions
 
 %%
 
 function:	
-	function_header optional_variable  body ';' {result = $3;} ;
+	function_header optional_variables  body ';' {result = $3;} ;
 	
 function_header:	
-	FUNCTION IDENTIFIER RETURNS type ';' ;
+	FUNCTION IDENTIFIER parameters RETURNS type ';' ;
 
 type:
 	INTEGER |
+	REAL |
 	CHARACTER ;
 	
-optional_variable:
-	variable |
+optional_variables:
+	optional_variables variable |
 	%empty ;
 	
 variable:	
 	IDENTIFIER ':' type IS statement ';' {scalars.insert($1, $5);}; |
-	IDENTIFIER ':' LIST OF type IS list ';' {lists.insert($1, $7);} ;
+	IDENTIFIER ':' LIST OF type IS list ';' {lists.insert($1, $7);}  |
+	error ';' {$$ = 0;} ;
+
+parameters:
+	parameter optional_parameters |
+	%empty ;
+
+optional_parameters:
+	optional_parameters ',' parameter |
+	%empty ;
+
+parameter:	
+	IDENTIFIER ':' type ;
 
 list:
 	'(' expressions ')' {$$ = $2;} ;
@@ -92,16 +105,44 @@ statement:
 	expression |
 	WHEN condition ',' expression ':' expression {$$ = $2 ? $4 : $6;} |
 	SWITCH expression IS cases OTHERS ARROW statement ';' ENDSWITCH
-		{$$ = !isnan($4) ? $4 : $7;} ;
+		{$$ = !isnan($4) ? $4 : $7;} |
+	IF condition THEN statement_ elsifs ELSE statement_ ENDIF |
+	FOLD direction operator list_choice ENDFOLD ;
+
 cases:
 	cases case {$$ = !isnan($1) ? $1 : $2;} |
+	error ';' {$$ = 0;} |
 	%empty {$$ = NAN;} ;
 	
 case:
 	CASE INT_LITERAL ARROW statement ';' {$$ = $<value>-2 == $2 ? $4 : NAN;} ; 
 
+elsifs:
+	elsifs elsif |
+	%empty ;
+
+elsif:
+	ELSIF condition THEN statement_ ;
+
+direction:
+	LEFT | RIGHT ;
+
+operator:
+	ADDOP | MULOP ;
+
+list_choice:
+	list | IDENTIFIER ;
+
 condition:
-	condition ANDOP relation {$$ = $1 && $2;} |
+	condition OROP conjunction {$$ = $1 || $2;} |
+	conjunction ;
+
+conjunction:
+	conjunction ANDOP negation {$$ = $1 && $2;} |
+	negation ;
+
+negation:
+	NOTOP relation |
 	relation ;
 
 relation:
@@ -113,13 +154,23 @@ expression:
 	term ;
       
 term:
-	term MULOP primary {$$ = evaluateArithmetic($1, $2, $3);}  |
-	primary ;
+	term MULOP factor {$$ = evaluateArithmetic($1, $2, $3);}  |
+	term MODOP factor {$$ = evaluateArithmetic($1, $2, $3);}  |
+	factor ;
+
+factor:
+	negate EXPOP factor |
+	negate ;
+
+negate:
+	NEGOP primary |
+	primary ;	
 
 primary:
 	'(' expression ')' {$$ = $2;} |
 	INT_LITERAL | 
 	CHAR_LITERAL |
+	REAL_LITERAL |
 	IDENTIFIER '(' expression ')' {$$ = extract_element($1, $3); } |
 	IDENTIFIER {if (!scalars.find($1, $$)) appendError(UNDECLARED, $1);} ;
 
