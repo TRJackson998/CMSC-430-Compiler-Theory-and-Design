@@ -5,6 +5,16 @@
 
 /* This file contains flex input file */
 
+/*
+Terrence Jackson
+UMGC CMSC 430
+9.14.24
+Project 3
+
+Updates from Project 2
+Implement floats and hexadecimals
+*/
+
 %{
 #include <cstdio>
 #include <string>
@@ -15,6 +25,32 @@ using namespace std;
 #include "values.h"
 #include "listing.h"
 #include "tokens.h"
+
+int atoh(char hex[]) {
+   // convert a string into hexadecimal
+   int result = 0;
+   int base = 1; // 16^0
+
+   for (int i = strlen(hex) -1; i > 0; i--) {
+      // lowercase -> uppercase
+      if (hex[i] > 90) {
+         hex[i] -= 32;
+      }
+
+      // hex to decimal
+      if (hex[i] >= 65 && hex[i] <= 70) {
+         //A-f
+         hex[i] -= 55;
+      } else {
+         hex[i] -= 48;
+      }
+
+      // store the result and update the base (16^0, 16^1, etc)
+      result += hex[i] * base;
+      base *= 16;
+   }
+   return result;
+}
 
 %}
 
@@ -81,8 +117,8 @@ real { ECHO; return(REAL); }
 {id}		{ ECHO; yylval.iden = (CharPtr)malloc(yyleng + 1); 
 			strcpy(yylval.iden, yytext); return(IDENTIFIER);}
 {dec}		{ ECHO; yylval.value = atoi(yytext); return(INT_LITERAL); }
-{float}		{ ECHO; return(REAL_LITERAL); }
-{hex}		{ ECHO; return(INT_LITERAL); }
+{float}		{ ECHO; yylval.value = atof(yytext); return(REAL_LITERAL); }
+{hex}		{ ECHO; yylval.value = atoh(yytext); return(INT_LITERAL); }
 {char}		{ ECHO; yylval.value = yytext[1]; return(CHAR_LITERAL); }
 {escape}		{ ECHO; return(CHAR_LITERAL); }
 {punc}		{ ECHO; return(yytext[0]); }
