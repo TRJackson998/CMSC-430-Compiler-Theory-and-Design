@@ -8,12 +8,12 @@
 /*
 Terrence Jackson
 UMGC CMSC 430
-9.14.24
+9.18.24
 Project 3
 
 Updates from Project 2
 Implement floats and hexadecimals
-Implement escape characters
+escape characters, arithmetic operators
 */
 
 %{

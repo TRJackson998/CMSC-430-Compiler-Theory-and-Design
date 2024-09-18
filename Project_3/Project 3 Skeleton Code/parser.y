@@ -1,9 +1,13 @@
-/* CMSC 430 Compiler Theory and Design
-   Project 3 Skeleton
-   UMGC CITE
-   Summer 2023
-   
-   Project 3 Parser with semantic actions for the interpreter */
+/*
+Terrence Jackson
+UMGC CMSC 430
+9.18.24
+Project 3
+
+Updates from Project 2
+Implement floats and hexadecimals
+escape characters, arithmetic operators
+*/
 
 %{
 

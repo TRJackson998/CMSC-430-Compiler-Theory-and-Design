@@ -1,7 +1,11 @@
-// CMSC 430 Compiler Theory and Design
-// Project 3 Skeleton
-// UMGC CITE
-// Summer 2023
+/*
+Terrence Jackson
+UMGC CMSC 430
+9.18.24
+Project 3
+
+Implement more arithmetic operators
+*/
 
 // This file contains the bodies of the evaluation functions
 
