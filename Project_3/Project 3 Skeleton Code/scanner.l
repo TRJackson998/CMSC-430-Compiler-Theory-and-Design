@@ -13,6 +13,7 @@ Project 3
 
 Updates from Project 2
 Implement floats and hexadecimals
+Implement escape characters
 */
 
 %{
