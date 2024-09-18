@@ -52,6 +52,27 @@ int atoh(char hex[]) {
    return result;
 }
 
+int atoe(char escape[]) {
+   // list of currently accepted escape characters
+   constexpr char options[5] = {'b', 't', 'n', 'f', 'r'};
+
+   // swicth on input, provide output from options list
+   switch(escape[2]) { 
+      case options[0]:
+         return '\b';
+      case options[1]:
+         return '\t';
+      case options[2]:
+         return '\n';
+      case options[3]:
+         return '\f';
+      case options[4]:
+         return '\r';
+      default:
+         return -1; // if all else fails, return -1
+   }   
+}
+
 %}
 
 %option noyywrap
@@ -120,7 +141,7 @@ real { ECHO; return(REAL); }
 {float}		{ ECHO; yylval.value = atof(yytext); return(REAL_LITERAL); }
 {hex}		{ ECHO; yylval.value = atoh(yytext); return(INT_LITERAL); }
 {char}		{ ECHO; yylval.value = yytext[1]; return(CHAR_LITERAL); }
-{escape}		{ ECHO; return(CHAR_LITERAL); }
+{escape}		{ ECHO; yylval.value = atoe(yytext); return(CHAR_LITERAL); }
 {punc}		{ ECHO; return(yytext[0]); }
 .		{ ECHO; appendError(LEXICAL, yytext); }
 %%
