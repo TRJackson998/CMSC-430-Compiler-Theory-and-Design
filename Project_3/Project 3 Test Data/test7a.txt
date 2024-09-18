@@ -1,0 +1,6 @@
+// Tests All Arithmetic Operators
+
+function main returns integer;
+begin
+    2 / 0;
+end;

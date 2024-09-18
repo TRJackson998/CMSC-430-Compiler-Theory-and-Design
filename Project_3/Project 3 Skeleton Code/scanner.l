@@ -95,12 +95,12 @@ punc		[\(\),:;]
 {comment}	{ ECHO; nextLine(); }
 {line}		{ ECHO; nextLine(); }
 "+"		{ ECHO; yylval.oper = ADD; return(ADDOP); }
-"-"		{ ECHO; return(ADDOP); }
-"~"		{ ECHO; return(NEGOP); }
+"-"		{ ECHO; yylval.oper = SUBTRACT; return(ADDOP); }
+"~"		{ ECHO; yylval.oper = NEG; return(NEGOP); }
 "*"		{ ECHO; yylval.oper = MULTIPLY; return(MULOP); }
-"/"		{ ECHO; return(MULOP); }
-"%"		{ ECHO; return(MODOP); }
-"^"		{ ECHO; return(EXPOP); }
+"/"		{ ECHO; yylval.oper = DIVIDE; return(MULOP); }
+"%"		{ ECHO; yylval.oper = MOD; return(MODOP); }
+"^"		{ ECHO; yylval.oper = EXP; return(EXPOP); }
 "&"		{ ECHO; yylval.oper = AND; return(ANDOP); }
 "<"		{ ECHO; yylval.oper = LESS; return(RELOP); }
 ">"		{ ECHO; return(RELOP); }

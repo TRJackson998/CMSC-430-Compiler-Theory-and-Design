@@ -50,7 +50,7 @@ double result;
 	RETURNS SWITCH WHEN LEFT RIGHT THEN REAL
 
 %type <value> body statement_ statement cases case expression term primary
-	 condition relation conjunction variable factor
+	 condition relation conjunction variable factor negate negation
 
 %type <list> list expressions
 
@@ -154,16 +154,16 @@ expression:
 	term ;
       
 term:
-	term MULOP factor {$$ = evaluateArithmetic($1, $2, $3);}  |
+	term MULOP factor {$$ = evaluateArithmetic($1, $2, $3); if ($3 == 0) appendError(SYNTAX, "Error, division by 0");}  |
 	term MODOP factor {$$ = evaluateArithmetic($1, $2, $3);}  |
 	factor ;
 
 factor:
-	negate EXPOP factor |
+	negate EXPOP factor {$$ = evaluateArithmetic($1, $2, $3);} |
 	negate ;
 
 negate:
-	NEGOP primary |
+	NEGOP primary {$$ = evaluateUnary($1, $2);}|
 	primary ;	
 
 primary:
