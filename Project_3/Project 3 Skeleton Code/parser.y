@@ -138,15 +138,15 @@ list_choice:
 	list | IDENTIFIER ;
 
 condition:
-	condition OROP conjunction {$$ = $1 || $2;} |
+	condition OROP conjunction {$$ = $1 || $3;} |
 	conjunction ;
 
 conjunction:
-	conjunction ANDOP negation {$$ = $1 && $2;} |
+	conjunction ANDOP negation {$$ = $1 && $3;} |
 	negation ;
 
 negation:
-	NOTOP relation |
+	NOTOP relation {$$ = !$2;} |
 	relation ;
 
 relation:
@@ -167,7 +167,7 @@ factor:
 	negate ;
 
 negate:
-	NEGOP primary {$$ = evaluateUnary($1, $2);}|
+	NEGOP primary {$$ = ($2 * -1);}|
 	primary ;	
 
 primary:

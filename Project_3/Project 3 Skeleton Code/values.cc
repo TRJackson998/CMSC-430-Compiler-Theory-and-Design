@@ -52,17 +52,20 @@ double evaluateRelational(double left, Operators operator_, double right)
 	case LESS:
 		result = left < right;
 		break;
-	}
-	return result;
-}
-
-double evaluateUnary(Operators operator_, double right)
-{
-	double result;
-	switch (operator_)
-	{
-	case NEG:
-		result = right * -1;
+	case LESSEQ:
+		result = left <= right;
+		break;
+	case MORE:
+		result = left > right;
+		break;
+	case MOREEQ:
+		result = left >= right;
+		break;
+	case EQUAL:
+		result = (left == right);
+		break;
+	case NOTEQ:
+		result = (left != right);
 		break;
 	}
 	return result;

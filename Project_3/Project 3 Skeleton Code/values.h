@@ -22,9 +22,15 @@ enum Operators
     MOD,
     NEG,
     LESS,
-    AND
+    MORE,
+    LESSEQ,
+    MOREEQ,
+    EQUAL,
+    NOTEQ,
+    AND,
+    OR,
+    NOT
 };
 
 double evaluateArithmetic(double left, Operators operator_, double right);
 double evaluateRelational(double left, Operators operator_, double right);
-double evaluateUnary(Operators operator_, double right);

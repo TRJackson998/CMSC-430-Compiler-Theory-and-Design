@@ -103,13 +103,13 @@ punc		[\(\),:;]
 "^"		{ ECHO; yylval.oper = EXP; return(EXPOP); }
 "&"		{ ECHO; yylval.oper = AND; return(ANDOP); }
 "<"		{ ECHO; yylval.oper = LESS; return(RELOP); }
-">"		{ ECHO; return(RELOP); }
-"<="	{ ECHO; return(RELOP); }
-">="	{ ECHO; return(RELOP); }
-"<>"	{ ECHO; return(RELOP); }
-"="		{ ECHO; return(RELOP); }
-"|" 	{ ECHO; return(OROP); }
-"!" 	{ ECHO; return(NOTOP); }
+">"		{ ECHO; yylval.oper = MORE; return(RELOP); }
+"<="	{ ECHO; yylval.oper = LESSEQ; return(RELOP); }
+">="	{ ECHO; yylval.oper = MOREEQ; return(RELOP); }
+"<>"	{ ECHO; yylval.oper = NOTEQ; return(RELOP); }
+"="		{ ECHO; yylval.oper = EQUAL; return(RELOP); }
+"|" 	{ ECHO; yylval.oper = OR; return(OROP); }
+"!" 	{ ECHO; yylval.oper = NOT; return(NOTOP); }
 "=>"		{ ECHO; return(ARROW); }
 begin		{ ECHO; return(BEGIN_); }
 case		{ ECHO; return(CASE); }
