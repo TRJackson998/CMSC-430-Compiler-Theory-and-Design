@@ -8,12 +8,13 @@
 /*
 Terrence Jackson
 UMGC CMSC 430
-9.18.24
+9.20.24
 Project 3
 
 Updates from Project 2
 Implement floats and hexadecimals
 escape characters, arithmetic operators
+fold directions
 */
 
 %{
@@ -131,8 +132,8 @@ endfold { ECHO; return(ENDFOLD); }
 endif { ECHO; return(ENDIF); }
 fold { ECHO; return(FOLD); }
 if { ECHO; return(IF); }
-left { ECHO; return(LEFT); }
-right { ECHO; return(RIGHT); }
+left { ECHO; yylval.dir = L; return(LEFT); }
+right { ECHO; yylval.dir = R; return(RIGHT); }
 then { ECHO; return(THEN); }
 real { ECHO; return(REAL); }
 

@@ -1,16 +1,19 @@
 /*
 Terrence Jackson
 UMGC CMSC 430
-9.18.24
+9.20.24
 Project 3
 
-Implement more arithmetic operators
+Implement more arithmetic operators,
+relational operators,
+fold statement
 */
 
 // This file contains the bodies of the evaluation functions
 
 #include <string>
 #include <cmath>
+#include <vector>
 
 using namespace std;
 
@@ -68,5 +71,32 @@ double evaluateRelational(double left, Operators operator_, double right)
 		result = (left != right);
 		break;
 	}
+	return result;
+}
+
+double evaluateFold(Directions direction, Operators operator_, std::vector<double> *list)
+{
+	double result;
+	if (direction == L)
+	{
+		auto i = list->begin();
+		result = *(i++);
+		while (i != list->end())
+		{
+			result = evaluateArithmetic(result, operator_, *i);
+			i++;
+		}
+	}
+	else
+	{
+		auto i = list->rbegin();
+		result = *(i++);
+		while (i != list->rend())
+		{
+			result = evaluateArithmetic(*i, operator_, result);
+			i++;
+		}
+	}
+
 	return result;
 }

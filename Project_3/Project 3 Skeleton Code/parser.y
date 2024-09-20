@@ -1,13 +1,13 @@
 /*
 Terrence Jackson
 UMGC CMSC 430
-9.18.24
+9.20.24
 Project 3
 
 Updates from Project 2
 Implement floats and hexadecimals
 escape characters, operators,
-if stmt, params
+if stmt, params, fold
 */
 
 %{
@@ -41,6 +41,7 @@ int current_arg = 1;
 %union {
 	CharPtr iden;
 	Operators oper;
+	Directions dir;
 	double value;
 	vector<double>* list;
 }
@@ -51,15 +52,18 @@ int current_arg = 1;
 
 %token <oper> ADDOP MULOP ANDOP RELOP OROP NOTOP MODOP EXPOP NEGOP
 
+%token <dir> LEFT RIGHT
+
 %token ARROW
 
 %token BEGIN_ CASE CHARACTER ELSE ELSIF END ENDIF ENDFOLD ENDSWITCH FOLD FUNCTION IF INTEGER IS LIST OF OTHERS
-	RETURNS SWITCH WHEN LEFT RIGHT THEN REAL
+	RETURNS SWITCH WHEN THEN REAL
 
 %type <value> body statement_ statement cases case expression term primary
 	 condition relation conjunction variable factor negate negation elsifs elsif
+	 fold
 
-%type <list> list expressions
+%type <list> list expressions list_choice
 
 %%
 
@@ -114,7 +118,7 @@ statement:
 	SWITCH expression IS cases OTHERS ARROW statement ';' ENDSWITCH
 		{$$ = !isnan($4) ? $4 : $7;} |
 	IF condition THEN statement_ elsifs ELSE statement_ ENDIF {$$ = $2 ? $4 : (!isnan($5) ? $5 : $7);} |
-	FOLD direction operator list_choice ENDFOLD ;
+	FOLD fold ENDFOLD {$$ = $2;} ;
 
 cases:
 	cases case {$$ = !isnan($1) ? $1 : $2;} |
@@ -131,14 +135,15 @@ elsifs:
 elsif:
 	ELSIF condition THEN statement_ {$$ = $2 ? $4 : NAN;} ;
 
-direction:
-	LEFT | RIGHT ;
-
-operator:
-	ADDOP | MULOP ;
+fold:
+	LEFT ADDOP list_choice {$$ = evaluateFold($1, $2, $3);} |
+	LEFT MULOP list_choice {$$ = evaluateFold($1, $2, $3);} |
+	RIGHT ADDOP list_choice {$$ = evaluateFold($1, $2, $3);} |
+	RIGHT MULOP list_choice {$$ = evaluateFold($1, $2, $3);};
 
 list_choice:
-	list | IDENTIFIER ;
+	list {$$ = $1;} | 
+	IDENTIFIER {if (!lists.find($1, $$)) appendError(UNDECLARED, $1);};
 
 condition:
 	condition OROP conjunction {$$ = $1 || $3;} |
