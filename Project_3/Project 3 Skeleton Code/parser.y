@@ -6,7 +6,8 @@ Project 3
 
 Updates from Project 2
 Implement floats and hexadecimals
-escape characters, arithmetic operators
+escape characters, operators,
+if stmt, params
 */
 
 %{
@@ -30,6 +31,8 @@ double extract_element(CharPtr list_name, double subscript);
 Symbols<double> scalars;
 Symbols<vector<double>*> lists;
 double result;
+double* arguments;
+int current_arg = 1;
 
 %}
 
@@ -54,7 +57,7 @@ double result;
 	RETURNS SWITCH WHEN LEFT RIGHT THEN REAL
 
 %type <value> body statement_ statement cases case expression term primary
-	 condition relation conjunction variable factor negate negation
+	 condition relation conjunction variable factor negate negation elsifs elsif
 
 %type <list> list expressions
 
@@ -89,7 +92,7 @@ optional_parameters:
 	%empty ;
 
 parameter:	
-	IDENTIFIER ':' type ;
+	IDENTIFIER ':' type {scalars.insert($1, arguments[current_arg++]);};
 
 list:
 	'(' expressions ')' {$$ = $2;} ;
@@ -110,7 +113,7 @@ statement:
 	WHEN condition ',' expression ':' expression {$$ = $2 ? $4 : $6;} |
 	SWITCH expression IS cases OTHERS ARROW statement ';' ENDSWITCH
 		{$$ = !isnan($4) ? $4 : $7;} |
-	IF condition THEN statement_ elsifs ELSE statement_ ENDIF |
+	IF condition THEN statement_ elsifs ELSE statement_ ENDIF {$$ = $2 ? $4 : (!isnan($5) ? $5 : $7);} |
 	FOLD direction operator list_choice ENDFOLD ;
 
 cases:
@@ -122,11 +125,11 @@ case:
 	CASE INT_LITERAL ARROW statement ';' {$$ = $<value>-2 == $2 ? $4 : NAN;} ; 
 
 elsifs:
-	elsifs elsif |
-	%empty ;
+	elsifs elsif {$$ = !isnan($1) ? $1 : $2;} |
+	%empty {$$ = NAN;} ;
 
 elsif:
-	ELSIF condition THEN statement_ ;
+	ELSIF condition THEN statement_ {$$ = $2 ? $4 : NAN;} ;
 
 direction:
 	LEFT | RIGHT ;
@@ -193,6 +196,12 @@ double extract_element(CharPtr list_name, double subscript) {
 }
 
 int main(int argc, char *argv[]) {
+	// capture arguments
+	arguments = new double[argc+1];
+	for (int i = 1; i < argc; i++) {
+		arguments[i] = atof(argv[i]);
+	}
+
 	firstLine();
 	yyparse();
 	if (lastLine() == 0)
