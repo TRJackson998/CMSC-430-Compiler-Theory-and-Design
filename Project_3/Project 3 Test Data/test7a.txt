@@ -1,6 +1,0 @@
-// Tests All Arithmetic Operators
-
-function main returns integer;
-begin
-    when 1 = 1 & 2 > 2, 1: 0;
-end;

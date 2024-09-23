@@ -35,7 +35,14 @@ double evaluateArithmetic(double left, Operators operator_, double right)
 		result = left * right;
 		break;
 	case DIVIDE:
-		result = left / right;
+		if (right == 0)
+		{
+			result = NAN;
+		}
+		else
+		{
+			result = left / right;
+		}
 		break;
 	case MOD:
 		result = (int)left % (int)right; // can only mod integers

@@ -166,7 +166,7 @@ expression:
 	term ;
       
 term:
-	term MULOP factor {$$ = evaluateArithmetic($1, $2, $3); if ($3 == 0) appendError(SYNTAX, "Error, division by 0");}  |
+	term MULOP factor {$$ = evaluateArithmetic($1, $2, $3); if (isnan($$)) appendError(SYNTAX, "Error, division by 0");}  |
 	term MODOP factor {$$ = evaluateArithmetic($1, $2, $3);}  |
 	factor ;
 
