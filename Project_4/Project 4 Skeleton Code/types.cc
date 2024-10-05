@@ -74,3 +74,12 @@ void checkType(Types value, Types type, string message)
 	if (value == MISMATCH || value != type)
 		appendError(GENERAL_SEMANTIC, message);
 }
+
+void checkRelation(Types left, Types right)
+{
+	if ((left == CHAR_TYPE || right == CHAR_TYPE) && (left != CHAR_TYPE || right != CHAR_TYPE))
+	{
+		// if one side is a char, both sides must be a char
+		appendError(GENERAL_SEMANTIC, "Character Literals Cannot be Compared to Numeric Expressions");
+	}
+}

@@ -137,7 +137,7 @@ negation:
 
 relation:
 	'(' condition')' |
-	expression RELOP expression ;
+	expression RELOP expression {checkRelation($1, $3);} ;
 	
 expression:
 	expression ADDOP term {$$ = checkArithmetic($1, $3);} |
