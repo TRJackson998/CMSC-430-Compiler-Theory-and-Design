@@ -13,6 +13,7 @@ enum Types
     MISMATCH,
     INT_TYPE,
     CHAR_TYPE,
+    REAL_TYPE,
     NONE
 };
 
