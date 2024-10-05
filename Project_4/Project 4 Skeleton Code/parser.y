@@ -42,7 +42,7 @@ Symbols<Types> lists;
 	RETURNS SWITCH WHEN LEFT RIGHT THEN REAL
 
 %type <type> list expressions body type statement_ statement cases case expression
-	term primary factor negate
+	term primary factor negate relation
 
 %%
 
@@ -137,7 +137,7 @@ negation:
 
 relation:
 	'(' condition')' |
-	expression RELOP expression {checkRelation($1, $3);} ;
+	expression RELOP expression {$$ = checkRelation($1, $3);} ;
 	
 expression:
 	expression ADDOP term {$$ = checkArithmetic($1, $3);} |

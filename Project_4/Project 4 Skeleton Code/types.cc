@@ -45,7 +45,7 @@ Types checkCases(Types left, Types right)
 	return MISMATCH;
 }
 
-Types checkArithmetic(Types left, Types right)
+Types checkArithmetic(Types left, Types right, string message)
 {
 	if (left == MISMATCH || right == MISMATCH)
 		return MISMATCH;
@@ -55,7 +55,7 @@ Types checkArithmetic(Types left, Types right)
 		return REAL_TYPE;
 	if (left == REAL_TYPE && right == INT_TYPE)
 		return REAL_TYPE;
-	appendError(GENERAL_SEMANTIC, "Integer Type Required");
+	appendError(GENERAL_SEMANTIC, message);
 	return MISMATCH;
 }
 
@@ -75,11 +75,18 @@ void checkType(Types value, Types type, string message)
 		appendError(GENERAL_SEMANTIC, message);
 }
 
-void checkRelation(Types left, Types right)
+Types checkRelation(Types left, Types right)
 {
-	if ((left == CHAR_TYPE || right == CHAR_TYPE) && (left != CHAR_TYPE || right != CHAR_TYPE))
+	if (left == CHAR_TYPE || right == CHAR_TYPE)
 	{
-		// if one side is a char, both sides must be a char
-		appendError(GENERAL_SEMANTIC, "Character Literals Cannot be Compared to Numeric Expressions");
+		if (left != CHAR_TYPE || right != CHAR_TYPE)
+		{
+			// if one side is a char, both sides must be a char
+			appendError(GENERAL_SEMANTIC, "Character Literals Cannot be Compared to Numeric Expressions");
+			return MISMATCH;
+		}
+		else
+			return CHAR_TYPE;
 	}
+	return checkArithmetic(left, right, "Relational Operator Requires Character or Numeric Types");
 }
