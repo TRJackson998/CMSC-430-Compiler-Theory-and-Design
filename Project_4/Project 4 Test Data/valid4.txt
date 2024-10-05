@@ -1,0 +1,7 @@
+-- Program with a Valid List
+
+function main returns integer;
+    aList: list of integer is (1, 2, 3);
+begin
+    aList(1);
+end;

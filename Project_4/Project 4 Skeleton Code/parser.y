@@ -75,13 +75,13 @@ optional_variable:
     
 variable:	
 	IDENTIFIER ':' type IS statement ';' {checkAssignment($3, $5, "Variable Initialization"); scalars.insert($1, $3);} |
-	IDENTIFIER ':' LIST OF type IS list ';' {lists.insert($1, $5);};
+	IDENTIFIER ':' LIST OF type IS list ';' {checkAssignment($5, $7, "List Initialization"); lists.insert($1, $5);};
 
 list:
 	'(' expressions ')' {$$ = $2;} ;
 
 expressions:
-	expressions ',' expression | 
+	expressions ',' expression {$$ = checkList($1, $3);} | 
 	expression ;
 
 body:
@@ -161,7 +161,7 @@ primary:
 	INT_LITERAL | 
 	CHAR_LITERAL |
 	REAL_LITERAL |
-	IDENTIFIER '(' expression ')' {$$ = find(lists, $1, "List");} |
+	IDENTIFIER '(' expression ')' {checkType($3, INT_TYPE, "List Subscript Must Be Integer"); $$ = find(lists, $1, "List");} |
 	IDENTIFIER  {$$ = find(scalars, $1, "Scalar");} ;
 
 %%

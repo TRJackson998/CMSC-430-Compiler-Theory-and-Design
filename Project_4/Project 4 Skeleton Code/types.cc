@@ -58,3 +58,19 @@ Types checkArithmetic(Types left, Types right)
 	appendError(GENERAL_SEMANTIC, "Integer Type Required");
 	return MISMATCH;
 }
+
+Types checkList(Types left, Types right)
+{
+	if (left == MISMATCH || right == MISMATCH)
+		return MISMATCH;
+	if (left == NONE || left == right)
+		return right;
+	appendError(GENERAL_SEMANTIC, "List Types Mismatch");
+	return MISMATCH;
+}
+
+void checkType(Types value, Types type, string message)
+{
+	if (value == MISMATCH || value != type)
+		appendError(GENERAL_SEMANTIC, message);
+}

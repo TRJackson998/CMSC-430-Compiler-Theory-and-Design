@@ -22,3 +22,5 @@ Types checkWhen(Types true_, Types false_);
 Types checkSwitch(Types case_, Types when, Types other);
 Types checkCases(Types left, Types right);
 Types checkArithmetic(Types left, Types right);
+Types checkList(Types left, Types right);
+void checkType(Types value, Types type, string message);
