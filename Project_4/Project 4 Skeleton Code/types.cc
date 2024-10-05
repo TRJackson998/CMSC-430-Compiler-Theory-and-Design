@@ -13,12 +13,14 @@ using namespace std;
 #include "types.h"
 #include "listing.h"
 
-void checkAssignment(Types lValue, Types rValue, string message) {
+void checkAssignment(Types lValue, Types rValue, string message)
+{
 	if (lValue != MISMATCH && rValue != MISMATCH && lValue != rValue)
 		appendError(GENERAL_SEMANTIC, "Type Mismatch on " + message);
 }
 
-Types checkWhen(Types true_, Types false_) {
+Types checkWhen(Types true_, Types false_)
+{
 	if (true_ == MISMATCH || false_ == MISMATCH)
 		return MISMATCH;
 	if (true_ != false_)
@@ -26,13 +28,15 @@ Types checkWhen(Types true_, Types false_) {
 	return true_;
 }
 
-Types checkSwitch(Types case_, Types when, Types other) {
+Types checkSwitch(Types case_, Types when, Types other)
+{
 	if (case_ != INT_TYPE)
 		appendError(GENERAL_SEMANTIC, "Switch Expression Not Integer");
 	return checkCases(when, other);
 }
 
-Types checkCases(Types left, Types right) {
+Types checkCases(Types left, Types right)
+{
 	if (left == MISMATCH || right == MISMATCH)
 		return MISMATCH;
 	if (left == NONE || left == right)
@@ -41,7 +45,8 @@ Types checkCases(Types left, Types right) {
 	return MISMATCH;
 }
 
-Types checkArithmetic(Types left, Types right) {
+Types checkArithmetic(Types left, Types right)
+{
 	if (left == MISMATCH || right == MISMATCH)
 		return MISMATCH;
 	if (left == INT_TYPE && right == INT_TYPE)
