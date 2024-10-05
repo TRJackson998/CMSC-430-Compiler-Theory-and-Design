@@ -51,6 +51,10 @@ Types checkArithmetic(Types left, Types right)
 		return MISMATCH;
 	if (left == INT_TYPE && right == INT_TYPE)
 		return INT_TYPE;
+	if (left == INT_TYPE && right == REAL_TYPE)
+		return REAL_TYPE;
+	if (left == REAL_TYPE && right == INT_TYPE)
+		return REAL_TYPE;
 	appendError(GENERAL_SEMANTIC, "Integer Type Required");
 	return MISMATCH;
 }
