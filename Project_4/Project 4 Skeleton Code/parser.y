@@ -62,7 +62,7 @@ optional_parameters:
 	%empty ;
 
 parameter:	
-	IDENTIFIER ':' type ;
+	IDENTIFIER ':' type {scalars.insert($1, $3);};
 
 type:
 	INTEGER {$$ = INT_TYPE;} |
