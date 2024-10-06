@@ -24,4 +24,5 @@ Types checkCases(Types left, Types right);
 Types checkArithmetic(Types left, Types right, string message = "Arithmetic Operator Requires Numeric Types");
 Types checkList(Types left, Types right);
 Types checkRelation(Types left, Types right);
+Types checkMod(Types left, Types right);
 bool checkType(Types value, Types type, string message);

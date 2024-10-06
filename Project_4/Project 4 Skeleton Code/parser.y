@@ -145,15 +145,15 @@ expression:
       
 term:
 	term MULOP factor {$$ = checkArithmetic($1, $3);} |
-	term MODOP factor |
+	term MODOP factor {$$ = checkMod($1, $3);} |
 	factor ;
 
 factor:
-	negate EXPOP factor |
+	negate EXPOP factor {$$ = checkArithmetic($1, $3);} |
 	negate ;
 
 negate:
-	NEGOP primary |
+	NEGOP primary {$$ = checkArithmetic($2, $2);} |
 	primary ;
 
 primary:

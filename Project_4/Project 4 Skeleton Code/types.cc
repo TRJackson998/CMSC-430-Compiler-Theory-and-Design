@@ -72,7 +72,12 @@ Types checkList(Types left, Types right)
 bool checkType(Types value, Types type, string message)
 {
 	if (value == MISMATCH || value != type)
+	{
 		appendError(GENERAL_SEMANTIC, message);
+		return false;
+	}
+	else
+		return true;
 }
 
 Types checkRelation(Types left, Types right)
@@ -89,4 +94,14 @@ Types checkRelation(Types left, Types right)
 			return CHAR_TYPE;
 	}
 	return checkArithmetic(left, right, "Relational Operator Requires Character or Numeric Types");
+}
+
+Types checkMod(Types left, Types right)
+{
+	if (left == INT_TYPE && right == INT_TYPE)
+	{
+		return INT_TYPE;
+	}
+	appendError(GENERAL_SEMANTIC, "Remainder Operator Requires Integer Operands");
+	return MISMATCH;
 }
