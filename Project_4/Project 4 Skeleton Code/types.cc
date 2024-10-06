@@ -105,3 +105,13 @@ Types checkMod(Types left, Types right)
 	appendError(GENERAL_SEMANTIC, "Remainder Operator Requires Integer Operands");
 	return MISMATCH;
 }
+
+Types checkIf(Types if_, Types elsifs_, Types else_)
+{
+	if ((if_ == MISMATCH) || (if_ != elsifs_) || (if_ != else_))
+	{
+		appendError(GENERAL_SEMANTIC, "If-Elsif-Else Type Mismatch");
+		return MISMATCH;
+	}
+	return if_;
+}
