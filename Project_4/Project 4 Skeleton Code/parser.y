@@ -161,7 +161,7 @@ primary:
 	INT_LITERAL | 
 	CHAR_LITERAL |
 	REAL_LITERAL |
-	IDENTIFIER '(' expression ')' {checkType($3, INT_TYPE, "List Subscript Must Be Integer"); $$ = find(lists, $1, "List");} |
+	IDENTIFIER '(' expression ')' {if (checkType($3, INT_TYPE, "List Subscript Must Be Integer")) $$ = find(lists, $1, "List");} |
 	IDENTIFIER  {$$ = find(scalars, $1, "Scalar");} ;
 
 %%

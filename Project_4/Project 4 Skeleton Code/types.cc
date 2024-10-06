@@ -69,7 +69,7 @@ Types checkList(Types left, Types right)
 	return MISMATCH;
 }
 
-void checkType(Types value, Types type, string message)
+bool checkType(Types value, Types type, string message)
 {
 	if (value == MISMATCH || value != type)
 		appendError(GENERAL_SEMANTIC, message);

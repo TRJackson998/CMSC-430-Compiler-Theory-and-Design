@@ -23,5 +23,5 @@ Types checkSwitch(Types case_, Types when, Types other);
 Types checkCases(Types left, Types right);
 Types checkArithmetic(Types left, Types right, string message = "Arithmetic Operator Requires Numeric Types");
 Types checkList(Types left, Types right);
-void checkType(Types value, Types type, string message);
 Types checkRelation(Types left, Types right);
+bool checkType(Types value, Types type, string message);
