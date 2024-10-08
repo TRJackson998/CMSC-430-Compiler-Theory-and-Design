@@ -134,7 +134,8 @@ operator:
 	ADDOP | MULOP ;
 
 list_choice:
-	list | IDENTIFIER ;
+	list {$$ = $1;} |
+	IDENTIFIER {$$ = find(lists, $1, "List");};
 
 condition:
 	condition OROP conjunction {$$ = checkRelation($1, $3);} |
