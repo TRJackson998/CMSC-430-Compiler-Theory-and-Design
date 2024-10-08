@@ -45,7 +45,7 @@ Types checkCases(Types left, Types right)
 	return MISMATCH;
 }
 
-Types checkArithmetic(Types left, Types right, string message)
+Types checkNumeric(Types left, Types right, string message)
 {
 	if (left == MISMATCH || right == MISMATCH)
 		return MISMATCH;
@@ -93,7 +93,7 @@ Types checkRelation(Types left, Types right)
 		else
 			return CHAR_TYPE;
 	}
-	return checkArithmetic(left, right, "Relational Operator Requires Character or Numeric Types");
+	return checkNumeric(left, right, "Relational Operator Requires Character or Numeric Types");
 }
 
 Types checkMod(Types left, Types right)
@@ -114,4 +114,14 @@ Types checkIf(Types if_, Types elsifs_, Types else_)
 		return MISMATCH;
 	}
 	return if_;
+}
+
+Types checkNumeric(Types value, string message)
+{
+
+	if ((value == INT_TYPE) || (value == REAL_TYPE))
+		return value;
+
+	appendError(GENERAL_SEMANTIC, message);
+	return MISMATCH;
 }

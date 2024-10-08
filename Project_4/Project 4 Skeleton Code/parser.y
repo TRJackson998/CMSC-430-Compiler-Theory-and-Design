@@ -141,20 +141,20 @@ relation:
 	expression RELOP expression {$$ = checkRelation($1, $3);} ;
 	
 expression:
-	expression ADDOP term {$$ = checkArithmetic($1, $3);} |
+	expression ADDOP term {$$ = checkNumeric($1, $3);} |
 	term ;
       
 term:
-	term MULOP factor {$$ = checkArithmetic($1, $3);} |
+	term MULOP factor {$$ = checkNumeric($1, $3);} |
 	term MODOP factor {$$ = checkMod($1, $3);} |
 	factor ;
 
 factor:
-	negate EXPOP factor {$$ = checkArithmetic($1, $3);} |
+	negate EXPOP factor {$$ = checkNumeric($1, $3);} |
 	negate ;
 
 negate:
-	NEGOP primary {$$ = checkArithmetic($2, $2);} |
+	NEGOP primary {$$ = checkNumeric($2);} |
 	primary ;
 
 primary:
