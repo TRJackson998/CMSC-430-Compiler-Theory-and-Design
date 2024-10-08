@@ -5,6 +5,15 @@
 
 /* This file contains flex input file */
 
+/*
+Terrence Jackson
+UMGC CMSC 430
+10.8.24
+Project 4
+
+Add in changes from Project 2
+*/
+
 %{
 #include <cstdio>
 #include <string>

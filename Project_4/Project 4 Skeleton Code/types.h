@@ -6,6 +6,15 @@
 // This file contains type definitions and the function
 // prototypes for the type checking functions
 
+/*
+Terrence Jackson
+UMGC CMSC 430
+10.8.24
+Project 4
+
+Updates to type checking and type validation
+*/
+
 typedef char *CharPtr;
 
 enum Types

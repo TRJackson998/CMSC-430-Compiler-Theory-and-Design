@@ -5,6 +5,15 @@
    
    Project 4 Parser with semantic actions for static semantic errors */
 
+/*
+Terrence Jackson
+UMGC CMSC 430
+10.8.24
+Project 4
+
+Updates to type checking and type validation
+*/
+
 %{
 #include <string>
 #include <vector>

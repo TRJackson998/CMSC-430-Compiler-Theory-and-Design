@@ -5,6 +5,15 @@
 
 // This file contains the bodies of the type checking functions
 
+/*
+Terrence Jackson
+UMGC CMSC 430
+10.8.24
+Project 4
+
+Updates to type checking and type validation
+*/
+
 #include <string>
 #include <vector>
 
