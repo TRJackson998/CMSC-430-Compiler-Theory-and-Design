@@ -102,7 +102,7 @@ Types checkList(Types left, Types right)
 		return MISMATCH;
 	if (left == NONE || left == right)
 		return right;
-	appendError(GENERAL_SEMANTIC, "List Types Mismatch");
+	appendError(GENERAL_SEMANTIC, "List Element Types Do Not Match");
 	return MISMATCH;
 }
 
