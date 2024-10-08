@@ -60,10 +60,15 @@ Types checkCases(Types left, Types right)
 
 Types checkNumeric(Types value, string message)
 {
+	// let mismatch float up to the top
+	if (value == MISMATCH)
+		return MISMATCH;
 
+	// check if it's one of the numeric types
 	if ((value == INT_TYPE) || (value == REAL_TYPE))
 		return value;
 
+	// error if we get this far
 	appendError(GENERAL_SEMANTIC, message);
 	return MISMATCH;
 }
@@ -94,6 +99,11 @@ Types checkList(Types left, Types right)
 
 Types checkRelation(Types left, Types right)
 {
+	// let mismatch float up to the top
+	if (left == MISMATCH || right == MISMATCH)
+		return MISMATCH;
+
+	// if one is a char, check that both are
 	if (left == CHAR_TYPE || right == CHAR_TYPE)
 	{
 		if (left != CHAR_TYPE || right != CHAR_TYPE)
@@ -103,6 +113,7 @@ Types checkRelation(Types left, Types right)
 			return MISMATCH;
 		}
 		else
+			// both are chars
 			return CHAR_TYPE;
 	}
 	return checkNumeric(left, right, "Relational Operator Requires Character or Numeric Types");
@@ -120,7 +131,14 @@ Types checkMod(Types left, Types right)
 
 Types checkIf(Types if_, Types elsifs_, Types else_)
 {
-	if ((if_ == MISMATCH) || ((elsifs_ != NONE) && (if_ != elsifs_)) || (if_ != else_))
+	// let mismatch float up to the top
+	if ((if_ == MISMATCH) || (elsifs_ == MISMATCH) || (else_ == MISMATCH))
+	{
+		return MISMATCH;
+	}
+
+	// compare elsif/else to if
+	if (((elsifs_ != NONE) && (if_ != elsifs_)) || (if_ != else_))
 	{
 		appendError(GENERAL_SEMANTIC, "If-Elsif-Else Type Mismatch");
 		return MISMATCH;
