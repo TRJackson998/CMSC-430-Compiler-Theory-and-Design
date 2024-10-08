@@ -120,7 +120,7 @@ Types checkMod(Types left, Types right)
 
 Types checkIf(Types if_, Types elsifs_, Types else_)
 {
-	if ((if_ == MISMATCH) || (if_ != elsifs_) || (if_ != else_))
+	if ((if_ == MISMATCH) || ((elsifs_ != NONE) && (if_ != elsifs_)) || (if_ != else_))
 	{
 		appendError(GENERAL_SEMANTIC, "If-Elsif-Else Type Mismatch");
 		return MISMATCH;
