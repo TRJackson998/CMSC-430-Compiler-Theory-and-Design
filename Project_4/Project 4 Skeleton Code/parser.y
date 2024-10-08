@@ -18,6 +18,7 @@ using namespace std;
 
 int yylex();
 Types find(Symbols<Types>& table, CharPtr identifier, string tableName);
+bool checkDuplicate(Symbols<Types>& table, CharPtr identifier, string tableName);
 void yyerror(const char* message);
 
 Symbols<Types> scalars;
@@ -74,8 +75,8 @@ optional_variable:
 	%empty ;
     
 variable:	
-	IDENTIFIER ':' type IS statement ';' {checkAssignment($3, $5, "Variable Initialization"); scalars.insert($1, $3);} |
-	IDENTIFIER ':' LIST OF type IS list ';' {checkAssignment($5, $7, "List Initialization"); lists.insert($1, $5);};
+	IDENTIFIER ':' type IS statement ';' {checkAssignment($3, $5, "Variable Initialization"); if (checkDuplicate(scalars, $1, "Scalar")) scalars.insert($1, $3);}; |
+	IDENTIFIER ':' LIST OF type IS list ';' {checkAssignment($5, $7, "List Initialization"); if (checkDuplicate(lists, $1, "List")) lists.insert($1, $5);};
 
 list:
 	'(' expressions ')' {$$ = $2;} ;
@@ -175,6 +176,17 @@ Types find(Symbols<Types>& table, CharPtr identifier, string tableName) {
 		return MISMATCH;
 	}
 	return type;
+}
+
+bool checkDuplicate(Symbols<Types>& table, CharPtr identifier, string tableName) {
+	Types type;
+	if (!table.find(identifier, type)) {
+		return true;
+	}
+	else {
+		appendError(GENERAL_SEMANTIC, "Duplicate " + tableName + " " + identifier);
+		return false;
+	}
 }
 
 void yyerror(const char* message) {
