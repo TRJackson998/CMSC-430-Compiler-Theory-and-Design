@@ -53,7 +53,6 @@ Symbols<Types> lists;
 
 %type <type> list expressions body type statement_ statement cases case expression
 	term primary factor negate relation elsifs elsif list_choice function_header function
-	condition conjunction negation
 
 %%
 
@@ -138,19 +137,19 @@ list_choice:
 	IDENTIFIER {$$ = find(lists, $1, "List");};
 
 condition:
-	condition OROP conjunction {$$ = checkRelation($1, $3);} |
-	conjunction {$$ = $1;} ;
+	condition OROP conjunction |
+	conjunction ;
 
 conjunction:
-	conjunction ANDOP negation {$$ = checkRelation($1, $3);} |
-	negation {$$ = $1;} ;
+	conjunction ANDOP negation |
+	negation ;
 
 negation:
-	NOTOP relation {$$ = checkRelation($2, $2);} |
-	relation {$$ = $1;} ;
+	NOTOP relation |
+	relation ;
 
 relation:
-	'(' condition')' {$$ = $2;} |
+	'(' condition')' |
 	expression RELOP expression {$$ = checkRelation($1, $3);} ;
 	
 expression:
