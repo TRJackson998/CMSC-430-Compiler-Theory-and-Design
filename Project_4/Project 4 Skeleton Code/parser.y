@@ -42,16 +42,16 @@ Symbols<Types> lists;
 	RETURNS SWITCH WHEN LEFT RIGHT THEN REAL
 
 %type <type> list expressions body type statement_ statement cases case expression
-	term primary factor negate relation elsifs elsif list_choice
+	term primary factor negate relation elsifs elsif list_choice function_header function
 
 %%
 
 function:	
-	function_header optional_variable body ;
+	function_header optional_variable body {checkAssignment($1, $3, "Function Return");};
 	
 		
 function_header:	
-	FUNCTION IDENTIFIER parameters RETURNS type ';' ;
+	FUNCTION IDENTIFIER parameters RETURNS type ';' {$$ = $5;};
 
 parameters:
 	parameter optional_parameters |
