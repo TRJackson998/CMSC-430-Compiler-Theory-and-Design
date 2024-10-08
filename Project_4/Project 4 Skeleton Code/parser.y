@@ -27,7 +27,7 @@ using namespace std;
 
 int yylex();
 Types find(Symbols<Types>& table, CharPtr identifier, string tableName);
-bool checkDuplicate(Symbols<Types>& table, CharPtr identifier, string tableName);
+bool notInSymbolTable(Symbols<Types>& table, CharPtr identifier, string tableName);
 void yyerror(const char* message);
 
 Symbols<Types> scalars;
