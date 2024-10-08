@@ -76,8 +76,8 @@ optional_variable:
 	%empty ;
     
 variable:	
-	IDENTIFIER ':' type IS statement ';' {checkAssignment($3, $5, "Variable Initialization"); if (checkDuplicate(scalars, $1, "Scalar")) scalars.insert($1, $3);}; |
-	IDENTIFIER ':' LIST OF type IS list ';' {checkAssignment($5, $7, "List Initialization"); if (checkDuplicate(lists, $1, "List")) lists.insert($1, $5);};
+	IDENTIFIER ':' type IS statement ';' {checkAssignment($3, $5, "Variable Initialization"); if (notInSymbolTable(scalars, $1, "Scalar")) scalars.insert($1, $3);}; |
+	IDENTIFIER ':' LIST OF type IS list ';' {checkAssignment($5, $7, "List Initialization"); if (notInSymbolTable(lists, $1, "List")) lists.insert($1, $5);};
 
 list:
 	'(' expressions ')' {$$ = $2;} ;
@@ -179,7 +179,7 @@ Types find(Symbols<Types>& table, CharPtr identifier, string tableName) {
 	return type;
 }
 
-bool checkDuplicate(Symbols<Types>& table, CharPtr identifier, string tableName) {
+bool notInSymbolTable(Symbols<Types>& table, CharPtr identifier, string tableName) {
 	Types type;
 	if (!table.find(identifier, type)) {
 		return true;
