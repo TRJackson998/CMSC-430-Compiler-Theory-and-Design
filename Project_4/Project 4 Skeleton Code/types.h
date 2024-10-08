@@ -18,6 +18,7 @@ enum Types
 };
 
 void checkAssignment(Types lValue, Types rValue, string message);
+bool checkType(Types value, Types type, string message);
 Types checkWhen(Types true_, Types false_);
 Types checkSwitch(Types case_, Types when, Types other);
 Types checkCases(Types left, Types right);
@@ -27,4 +28,3 @@ Types checkList(Types left, Types right);
 Types checkRelation(Types left, Types right);
 Types checkMod(Types left, Types right);
 Types checkIf(Types if_, Types elsifs_, Types else_);
-bool checkType(Types value, Types type, string message);

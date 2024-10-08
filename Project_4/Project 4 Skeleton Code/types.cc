@@ -19,6 +19,17 @@ void checkAssignment(Types lValue, Types rValue, string message)
 		appendError(GENERAL_SEMANTIC, "Type Mismatch on " + message);
 }
 
+bool checkType(Types value, Types type, string message)
+{
+	if (value == MISMATCH || value != type)
+	{
+		appendError(GENERAL_SEMANTIC, message);
+		return false;
+	}
+	else
+		return true;
+}
+
 Types checkWhen(Types true_, Types false_)
 {
 	if (true_ == MISMATCH || false_ == MISMATCH)
@@ -45,6 +56,16 @@ Types checkCases(Types left, Types right)
 	return MISMATCH;
 }
 
+Types checkNumeric(Types value, string message)
+{
+
+	if ((value == INT_TYPE) || (value == REAL_TYPE))
+		return value;
+
+	appendError(GENERAL_SEMANTIC, message);
+	return MISMATCH;
+}
+
 Types checkNumeric(Types left, Types right, string message)
 {
 	if (left == MISMATCH || right == MISMATCH)
@@ -67,17 +88,6 @@ Types checkList(Types left, Types right)
 		return right;
 	appendError(GENERAL_SEMANTIC, "List Types Mismatch");
 	return MISMATCH;
-}
-
-bool checkType(Types value, Types type, string message)
-{
-	if (value == MISMATCH || value != type)
-	{
-		appendError(GENERAL_SEMANTIC, message);
-		return false;
-	}
-	else
-		return true;
 }
 
 Types checkRelation(Types left, Types right)
@@ -114,14 +124,4 @@ Types checkIf(Types if_, Types elsifs_, Types else_)
 		return MISMATCH;
 	}
 	return if_;
-}
-
-Types checkNumeric(Types value, string message)
-{
-
-	if ((value == INT_TYPE) || (value == REAL_TYPE))
-		return value;
-
-	appendError(GENERAL_SEMANTIC, message);
-	return MISMATCH;
 }
