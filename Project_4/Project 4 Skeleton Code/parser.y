@@ -42,7 +42,7 @@ Symbols<Types> lists;
 	RETURNS SWITCH WHEN LEFT RIGHT THEN REAL
 
 %type <type> list expressions body type statement_ statement cases case expression
-	term primary factor negate relation elsifs elsif
+	term primary factor negate relation elsifs elsif list_choice
 
 %%
 
@@ -99,7 +99,8 @@ statement:
 		{$$ = checkSwitch($2, $4, $7);} |
 	IF condition THEN statement_ elsifs ELSE statement_ ENDIF
 		{$$ = checkIf($4, $5, $7);} |
-	FOLD direction operator list_choice ENDFOLD ;
+	FOLD direction operator list_choice ENDFOLD 
+		{$$ = checkNumeric($4, "Fold Requires A Numeric List");} ;
 
 cases:
 	cases case {$$ = checkCases($1, $2);} | 
