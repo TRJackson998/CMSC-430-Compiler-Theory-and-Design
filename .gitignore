@@ -9,3 +9,4 @@ parser.c
 parser.output
 parser.tab.h
 
+.vscode
